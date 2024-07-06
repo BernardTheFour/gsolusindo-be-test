@@ -43,7 +43,7 @@ This project demonstrates how to run Docker Compose on WSL (Windows Subsystem fo
 
     ```bash
     cd /path/to/your/project
-    `
+    ```
 
 2. Run bash script defined in the `run.sh` file:
 
