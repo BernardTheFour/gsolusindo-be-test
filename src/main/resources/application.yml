@@ -17,3 +17,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
+
+  liquibase:
+    change-log: classpath:db-migration/db.changelog-master.yml
