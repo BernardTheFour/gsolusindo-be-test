@@ -29,6 +29,9 @@ public class ConsumtionBooking {
 
     int amount;
 
+    public ConsumtionBooking() {
+    }
+
     public ConsumtionBooking(Booking booking, Consumtion consumtion, int amount) {
         this.booking = booking;
         this.consumtion = consumtion;

@@ -66,10 +66,10 @@ public class FetchApiService {
                     Set<ConsumtionBookingDto> consumtionBookingsDto = data.listConsumption()
                             .stream()
                             .map(consumtion -> {
-                                ConsumtionBookingDto dto = new ConsumtionBookingDto(
-                                        bookingUUID,
-                                        consumtionService.getByName(consumtion.name()).getId(),
+                                ConsumtionBookingDto dto = ConsumtionBookingDto.toDto(
+                                        consumtionService.getByName(consumtion.name()),
                                         data.participants());
+
                                 return dto;
                             })
                             .collect(Collectors.toSet());

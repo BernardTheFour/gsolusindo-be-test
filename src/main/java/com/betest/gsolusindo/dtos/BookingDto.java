@@ -11,19 +11,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record BookingDto(
         UUID id,
-        String officeName,
-        String roomName,
+        String office_name,
+        String room_name,
         int participants,
-        Instant startTime,
-        Instant endTime,
-        Instant bookingDate,
-        Set<ConsumtionBookingDto> consumtionBookingsDto) {
+        Instant start_time,
+        Instant end_time,
+        Instant booking_date,
+        Set<ConsumtionBookingDto> consumtion_bookings) {
 
     public static BookingDto toDto(Booking entity) {
         Set<ConsumtionBookingDto> consumtionBookingDtos = entity.getConsumtionBookings()
                 .stream()
                 .map((consumtionBooking) -> ConsumtionBookingDto.toDto(
-                        consumtionBooking.getConsumtion().getId(),
+                        consumtionBooking.getConsumtion(),
                         consumtionBooking.getAmount()))
                 .collect(Collectors.toSet());
 
