@@ -56,3 +56,9 @@ This project demonstrates how to run Docker Compose on WSL (Windows Subsystem fo
 This application is running on port 8080.
 
 To access the API documentation, hit http://localhost:8080/swagger-ui/index.html
+
+### PostgreSQL pgAdmin UI
+
+After running docker compose, pgAdmin UI could be accessed from browser.
+
+To access the UI, hit http://localhost:1010/browser/
