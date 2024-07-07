@@ -21,23 +21,4 @@ public class BookingService {
         this.bookingRepository = bookingRepository;
         this.consumtionService = consumtionService;
     }
-
-    public Booking saveBookingFromFetch(BookingFetchDto dto) {
-        Set<Consumtion> consumtions = dto.consumtionNames()
-                .stream()
-                .map((consumtionName) -> consumtionService.getByName(consumtionName))
-                .collect(Collectors.toSet());
-
-        Booking booking = new Booking(
-                dto.id(),
-                dto.officeName(),
-                dto.roomName(),
-                dto.participants(),
-                dto.startTime(),
-                dto.endTime(),
-                dto.bookingDate(),
-                consumtions);
-
-        return bookingRepository.save(booking);
-    }
 }
