@@ -51,7 +51,7 @@ This project demonstrates how to run Docker Compose on WSL (Windows Subsystem fo
     sh run.sh
     ```
 
-### Accessing Swagger API Documentation
+### Swagger API Documentation
 
 This application is running on port 8080.
 
