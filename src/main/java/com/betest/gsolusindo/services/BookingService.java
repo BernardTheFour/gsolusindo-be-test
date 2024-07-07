@@ -77,7 +77,7 @@ public class BookingService {
                     BookingDto bookingDto = BookingDto.toDto(booking);
 
                     // assume max room capacity is 100 to get percentage
-                    int roomCapacity = booking.getParticipants() / 100;
+                    float roomCapacity = booking.getParticipants() / 100f;
 
                     // get total consumtion cost
                     int consumtionCost = consumtionBookingService
