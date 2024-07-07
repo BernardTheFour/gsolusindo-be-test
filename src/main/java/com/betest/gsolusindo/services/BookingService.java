@@ -1,9 +1,11 @@
 package com.betest.gsolusindo.services;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.betest.gsolusindo.dtos.BookingDto;
+import com.betest.gsolusindo.dtos.BookingSummaryDto;
 import com.betest.gsolusindo.models.Booking;
 import com.betest.gsolusindo.models.Consumtion;
 import com.betest.gsolusindo.repositories.BookingRepository;
@@ -29,20 +31,20 @@ public class BookingService {
         // save and get the booking
         Booking entity = new Booking(
                 dto.id(),
-                dto.officeName(),
-                dto.roomName(),
+                dto.office_name(),
+                dto.room_name(),
                 dto.participants(),
-                dto.startTime(),
-                dto.endTime(),
-                dto.bookingDate());
+                dto.start_time(),
+                dto.end_time(),
+                dto.booking_date());
 
         Booking booking = bookingRepository.save(entity);
 
         // get consumtion and save the ConsumtionBooking
-        dto.consumtionBookingsDto()
+        dto.consumtion_bookings()
                 .stream()
                 .forEach((consumtionBooking) -> {
-                    Consumtion consumtion = consumtionService.getById(consumtionBooking.consumtionId());
+                    Consumtion consumtion = consumtionService.getById(consumtionBooking.consumtion_id());
                     consumtionBookingService.saveConsumtionBooking(booking, consumtion, consumtionBooking.amount());
                 });
 
@@ -55,5 +57,12 @@ public class BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
 
         return booking;
+    }
+
+    public List<BookingSummaryDto> getSummaries(int year, int month) {
+
+        List<Booking> bookings = bookingRepository.findBookingByYearAndMonth(year, month);
+
+        return null;
     }
 }

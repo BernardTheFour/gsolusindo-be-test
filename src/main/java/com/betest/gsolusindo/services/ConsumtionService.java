@@ -23,8 +23,8 @@ public class ConsumtionService {
         Consumtion consumtion = new Consumtion(
                 dto.id(),
                 dto.name(),
-                dto.maxPrice(),
-                dto.createdAt(),
+                dto.max_price(),
+                dto.created_at(),
                 null);
 
         return consumtionRepository.save(consumtion);
