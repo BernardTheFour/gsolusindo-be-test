@@ -6,8 +6,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.betest.gsolusindo.models.Booking;
-import com.betest.gsolusindo.models.Consumtion;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record BookingDto(
         UUID id,
         String officeName,
@@ -16,12 +17,14 @@ public record BookingDto(
         Instant startTime,
         Instant endTime,
         Instant bookingDate,
-        Set<UUID> consumtionIds) {
+        Set<ConsumtionBookingDto> consumtionBookingsDto) {
 
     public static BookingDto toDto(Booking entity) {
-        Set<UUID> consumtionIds = entity.getConsumtions()
+        Set<ConsumtionBookingDto> consumtionBookingDtos = entity.getConsumtionBookings()
                 .stream()
-                .map(Consumtion::getId)
+                .map((consumtionBooking) -> ConsumtionBookingDto.toDto(
+                        consumtionBooking.getConsumtion().getId(),
+                        consumtionBooking.getAmount()))
                 .collect(Collectors.toSet());
 
         BookingDto dto = new BookingDto(
@@ -32,8 +35,8 @@ public record BookingDto(
                 entity.getStartTime(),
                 entity.getEndTime(),
                 entity.getBookingDate(),
-                consumtionIds);
-                
+                consumtionBookingDtos);
+
         return dto;
     }
 }

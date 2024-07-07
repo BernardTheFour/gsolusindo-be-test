@@ -5,17 +5,14 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.betest.gsolusindo.dtos.BookingDto;
 import com.betest.gsolusindo.dtos.BookingFetchDto;
+import com.betest.gsolusindo.dtos.ConsumtionBookingDto;
 import com.betest.gsolusindo.dtos.ConsumtionDto;
 import com.betest.gsolusindo.dtos.ConsumtionFetchDto;
-import com.betest.gsolusindo.models.Booking;
-import com.betest.gsolusindo.models.Consumtion;
 
 @Service
 public class FetchApiService {
@@ -23,8 +20,6 @@ public class FetchApiService {
 
     private final ConsumtionService consumtionService;
     private final BookingService bookingService;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public FetchApiService(WebClient.Builder webClientBuilder, ConsumtionService consumtionService,
             BookingService bookingService) {
@@ -67,22 +62,29 @@ public class FetchApiService {
 
         response.stream()
                 .forEach((data) -> {
-                    Set<UUID> consumtionIds = data.listConsumption()
+                    UUID bookingUUID = UUID.randomUUID();
+                    Set<ConsumtionBookingDto> consumtionBookingsDto = data.listConsumption()
                             .stream()
-                            .map(consumtion -> consumtionService.getByName(consumtion.name()).getId())
+                            .map(consumtion -> {
+                                ConsumtionBookingDto dto = new ConsumtionBookingDto(
+                                        bookingUUID,
+                                        consumtionService.getByName(consumtion.name()).getId(),
+                                        data.participants());
+                                return dto;
+                            })
                             .collect(Collectors.toSet());
 
                     BookingDto dto = new BookingDto(
-                            UUID.randomUUID(),
+                            bookingUUID,
                             data.officeName(),
                             data.roomName(),
                             data.participants(),
                             data.startTime(),
                             data.endTime(),
                             data.bookingDate(),
-                            consumtionIds);
+                            consumtionBookingsDto);
 
-                    bookingService.saveBooking(dto);
+                    bookingService.saveBookingWithConsumtions(dto);
                 });
     }
 }

@@ -8,9 +8,10 @@ import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,18 +33,19 @@ public class Consumtion {
     @Column(name = "created_at")
     Instant createdAt;
 
-    @ManyToMany(mappedBy = "consumtions")
-    Set<Booking> bookings;
+    @OneToMany(mappedBy = "consumtion", fetch = FetchType.LAZY)
+    Set<ConsumtionBooking> consumtionBookings;
 
     public Consumtion() {
     }
 
-    public Consumtion(UUID id, String name, int maxPrice, Instant createdAt, Set<Booking> bookings) {
+    public Consumtion(UUID id, String name, int maxPrice, Instant createdAt,
+            Set<ConsumtionBooking> consumtionBookings) {
         this.id = id;
         this.name = name;
         this.maxPrice = maxPrice;
         this.createdAt = createdAt;
-        this.bookings = bookings;
+        this.consumtionBookings = consumtionBookings;
     }
 
     public Consumtion(String name, int maxPrice, Instant createdAt) {
@@ -52,11 +54,11 @@ public class Consumtion {
         this.createdAt = createdAt;
     }
 
-    public Consumtion(String name, int maxPrice, Instant createdAt, Set<Booking> bookings) {
+    public Consumtion(String name, int maxPrice, Instant createdAt, Set<ConsumtionBooking> consumtionBookings) {
         this.name = name;
         this.maxPrice = maxPrice;
         this.createdAt = createdAt;
-        this.bookings = bookings;
+        this.consumtionBookings = consumtionBookings;
     }
 
     public UUID getId() {
@@ -91,11 +93,11 @@ public class Consumtion {
         this.createdAt = createdAt;
     }
 
-    public Set<Booking> getBookings() {
-        return bookings;
+    public Set<ConsumtionBooking> getBookings() {
+        return consumtionBookings;
     }
 
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
+    public void setBookings(Set<ConsumtionBooking> consumtionBookings) {
+        this.consumtionBookings = consumtionBookings;
     }
 }
