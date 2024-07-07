@@ -6,11 +6,10 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,19 +39,14 @@ public class Booking {
     @Column(name = "booking_date")
     Instant bookingDate;
 
-    @ManyToMany
-    @JoinTable(
-        name = "booking_consumtion", 
-        joinColumns = @JoinColumn(name = "booking_id"), 
-        inverseJoinColumns = @JoinColumn(name = "consumtion_id")
-    )
-    Set<Consumtion> consumtions;
+    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+    Set<ConsumtionBooking> consumtionBookings;
 
     public Booking() {
     }
 
     public Booking(UUID id, String officeName, String roomName, int participants, Instant startTime, Instant endTime,
-            Instant bookingDate, Set<Consumtion> consumtions) {
+            Instant bookingDate) {
         this.id = id;
         this.officeName = officeName;
         this.roomName = roomName;
@@ -60,18 +54,16 @@ public class Booking {
         this.startTime = startTime;
         this.endTime = endTime;
         this.bookingDate = bookingDate;
-        this.consumtions = consumtions;
     }
 
     public Booking(String officeName, String roomName, int participants, Instant startTime, Instant endTime,
-            Instant bookingDate, Set<Consumtion> consumtions) {
+            Instant bookingDate) {
         this.officeName = officeName;
         this.roomName = roomName;
         this.participants = participants;
         this.startTime = startTime;
         this.endTime = endTime;
         this.bookingDate = bookingDate;
-        this.consumtions = consumtions;
     }
 
     public UUID getId() {
@@ -130,11 +122,11 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
-    public Set<Consumtion> getConsumtions() {
-        return consumtions;
+    public Set<ConsumtionBooking> getConsumtionBookings() {
+        return consumtionBookings;
     }
 
-    public void setConsumtions(Set<Consumtion> consumtions) {
-        this.consumtions = consumtions;
+    public void setConsumtions(Set<ConsumtionBooking> consumtionBookings) {
+        this.consumtionBookings = consumtionBookings;
     }
 }
