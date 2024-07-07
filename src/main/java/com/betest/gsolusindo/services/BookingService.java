@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.betest.gsolusindo.dtos.BookingFetchDto;
+import com.betest.gsolusindo.dtos.BookingDto;
 import com.betest.gsolusindo.models.Booking;
 import com.betest.gsolusindo.models.Consumtion;
 import com.betest.gsolusindo.repositories.BookingRepository;
@@ -22,10 +22,10 @@ public class BookingService {
         this.consumtionService = consumtionService;
     }
 
-    public Booking saveBookingFromFetch(BookingFetchDto dto) {
-        Set<Consumtion> consumtions = dto.consumtionNames()
+    public Booking saveBooking(BookingDto dto) {
+        Set<Consumtion> consumtions = dto.consumtionIds()
                 .stream()
-                .map((consumtionName) -> consumtionService.getByName(consumtionName))
+                .map((id) -> consumtionService.getById(id))
                 .collect(Collectors.toSet());
 
         Booking booking = new Booking(
