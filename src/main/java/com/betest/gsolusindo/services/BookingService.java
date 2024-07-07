@@ -2,6 +2,8 @@ package com.betest.gsolusindo.services;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.betest.gsolusindo.dtos.BookingDto;
@@ -20,7 +22,9 @@ public class BookingService {
 
     private final ConsumtionBookingService consumtionBookingService;
 
-    public BookingService(BookingRepository bookingRepository, ConsumtionService consumtionService,
+    public BookingService(
+            BookingRepository bookingRepository,
+            ConsumtionService consumtionService,
             ConsumtionBookingService consumtionBookingService) {
         this.bookingRepository = bookingRepository;
         this.consumtionService = consumtionService;
@@ -44,8 +48,13 @@ public class BookingService {
         dto.consumtion_bookings()
                 .stream()
                 .forEach((consumtionBooking) -> {
-                    Consumtion consumtion = consumtionService.getById(consumtionBooking.consumtion_id());
-                    consumtionBookingService.saveConsumtionBooking(booking, consumtion, consumtionBooking.amount());
+                    Consumtion consumtion = consumtionService
+                            .getById(consumtionBooking.consumtion_id());
+                    consumtionBookingService
+                            .saveConsumtionBooking(
+                                    booking,
+                                    consumtion,
+                                    consumtionBooking.amount());
                 });
 
         // return new booking attached to consumtions
@@ -60,9 +69,27 @@ public class BookingService {
     }
 
     public List<BookingSummaryDto> getSummaries(int year, int month) {
-
         List<Booking> bookings = bookingRepository.findBookingByYearAndMonth(year, month);
 
-        return null;
+        List<BookingSummaryDto> summaryDtos = bookings
+                .stream()
+                .map((booking) -> {
+                    BookingDto bookingDto = BookingDto.toDto(booking);
+
+                    // assume max room capacity is 100 to get percentage
+                    int roomCapacity = booking.getParticipants() / 100;
+
+                    // get total consumtion cost
+                    int consumtionCost = consumtionBookingService
+                            .getTotalCostFromBooking(booking);
+
+                    return BookingSummaryDto.toDto(
+                            bookingDto,
+                            roomCapacity,
+                            consumtionCost);
+                })
+                .collect(Collectors.toList());
+
+        return summaryDtos;
     }
 }
