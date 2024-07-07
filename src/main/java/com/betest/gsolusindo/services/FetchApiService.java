@@ -1,6 +1,7 @@
 package com.betest.gsolusindo.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,16 +9,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.betest.gsolusindo.dtos.BookingFetchDto;
+import com.betest.gsolusindo.dtos.ConsumtionDto;
 import com.betest.gsolusindo.dtos.ConsumtionFetchDto;
+import com.betest.gsolusindo.models.Consumtion;
 
 @Service
 public class FetchApiService {
     private final WebClient webClient;
 
+    private final ConsumtionService consumtionService;
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public FetchApiService(WebClient.Builder webClientBuilder) {
+    public FetchApiService(WebClient.Builder webClientBuilder, ConsumtionService consumtionService) {
         this.webClient = webClientBuilder.build();
+        this.consumtionService = consumtionService;
     }
 
     public void fetchConsumtionData() {
@@ -30,8 +36,16 @@ public class FetchApiService {
                 .collectList()
                 .block();
 
-        logger.info("Consumtion data size: " + response.size());
-        logger.info("Example Consumtion data: " + response.get(0).toString());
+        response.stream()
+                .forEach((data) -> {
+                    ConsumtionDto dto = new ConsumtionDto(
+                            UUID.randomUUID(),
+                            data.name(),
+                            data.maxPrice(),
+                            data.createdAt());
+
+                    consumtionService.saveConsumtion(dto);
+                });
     }
 
     public void fetchBookingData() {
@@ -44,7 +58,5 @@ public class FetchApiService {
                 .collectList()
                 .block();
 
-        logger.info("Consumtion data size: " + response.size());
-        logger.info("Example Consumtion data: " + response.get(0).toString());
     }
 }
