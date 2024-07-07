@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1720325928-1
+      author: root (generated)
+      changes:
+        - insert:
+            tableName: consumtions
+            columns:
+              - column:
+                  name: id
+                  value: 3b9d45b0-ec3d-11ec-8fea-0242ac120002
+              - column:
+                  name: max_price
+                  value: 20000
+              - column:
+                  name: name
+                  value: "Snack Siang"
+              - column:
+                  name: created_at
+                  value: "2024-07-04T04:03:28.947Z"
+        - insert:
+            tableName: consumtions
+            columns:
+              - column:
+                  name: id
+                  value: 3b9d4710-ec3d-11ec-8fea-0242ac120002
+              - column:
+                  name: max_price
+                  value: 30000
+              - column:
+                  name: name
+                  value: "Makan Siang"
+              - column:
+                  name: created_at
+                  value: "2024-07-04T10:04:22.946Z"
+        - insert:
+            tableName: consumtions
+            columns:
+              - column:
+                  name: id
+                  value: 3b9d4868-ec3d-11ec-8fea-0242ac120002
+              - column:
+                  name: max_price
+                  value: 20000
+              - column:
+                  name: name
+                  value: "Snack Sore"
+              - column:
+                  name: created_at
+                  value: "2024-07-03T21:57:46.929Z"
+  - changeSet:
+      id: 1720325928-2
+      author: root (generated)
+      changes:
+        - insert:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  value: c2c3e8e8-8d6a-4c0c-bcf3-2b2e8d4eb1c0
+              - column:
+                  name: booking_date
+                  value: "2024-01-03T07:25:52.737Z"
+              - column:
+                  name: office_name
+                  value: "UID JAYA"
+              - column:
+                  name: start_time
+                  value: "2024-01-04T09:00:00.000Z"
+              - column:
+                  name: end_time
+                  value: "2024-01-04T16:00:00.000Z"
+              - column:
+                  name: participant_count
+                  value: 62
+              - column:
+                  name: room_name
+                  value: "Ruang Borobudur"

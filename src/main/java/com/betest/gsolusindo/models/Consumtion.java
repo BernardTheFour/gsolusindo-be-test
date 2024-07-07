@@ -29,6 +29,7 @@ public class Consumtion {
     int maxPrice;
 
     @CreatedDate
+    @Column(name = "created_at")
     Instant createdAt;
 
     @ManyToMany(mappedBy = "consumtions")
