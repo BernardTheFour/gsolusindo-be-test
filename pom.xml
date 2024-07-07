@@ -12,7 +12,7 @@
 	<artifactId>gsolusindo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gsolusindo</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Test project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -34,9 +34,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectreactor</groupId>
+			<artifactId>reactor-spring</artifactId>
+			<version>1.0.1.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -44,9 +56,34 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -54,8 +91,44 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>4.3.2</version>
+				<configuration>
+					<propertyFile>target/classes/liquibase.properties</propertyFile>
+					<url>jdbc:postgresql://${DB_HOST}/${DB_NAME}</url>
+					<username>${DB_USER}</username>
+					<password>${DB_PASS}</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>42.2.18</version>
+					</dependency>
+					<dependency>
+						<groupId>org.liquibase.ext</groupId>
+						<artifactId>liquibase-hibernate6</artifactId>
+						<version>4.28.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-data-jpa</artifactId>
+						<version>3.3.1</version>
+					</dependency>
+					<dependency>
+						<groupId>jakarta.validation</groupId>
+						<artifactId>jakarta.validation-api</artifactId>
+						<version>3.1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.betest.gsolusindo.GsolusindoApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

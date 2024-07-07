@@ -1,0 +1,140 @@
+databaseChangeLog:
+- changeSet:
+    id: 1720343646726-1
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: bookingsPK
+            name: id
+            type: UUID
+        - column:
+            name: booking_date
+            type: TIMESTAMP(6) WITHOUT TIME ZONE
+        - column:
+            name: end_time
+            type: TIMESTAMP(6) WITHOUT TIME ZONE
+        - column:
+            name: office_name
+            type: VARCHAR(100)
+        - column:
+            name: participant_count
+            type: INTEGER
+        - column:
+            name: room_name
+            type: VARCHAR(100)
+        - column:
+            name: start_time
+            type: TIMESTAMP(6) WITHOUT TIME ZONE
+        tableName: bookings
+- changeSet:
+    id: 1720343646726-2
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: consumtion_bookingPK
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: amount
+            type: INTEGER
+        - column:
+            name: booking_id
+            type: UUID
+        - column:
+            name: consumtion_id
+            type: UUID
+        tableName: consumtion_booking
+- changeSet:
+    id: 1720343646726-3
+    author: root (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: consumtionsPK
+            name: id
+            type: UUID
+        - column:
+            name: created_at
+            type: TIMESTAMP(6) WITHOUT TIME ZONE
+        - column:
+            name: max_price
+            type: INTEGER
+        - column:
+            name: name
+            type: VARCHAR(100)
+        tableName: consumtions
+- changeSet:
+    id: 1720343646726-4
+    author: root (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: UC_BOOKINGSID_COL
+        tableName: bookings
+- changeSet:
+    id: 1720343646726-5
+    author: root (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: UC_CONSUMTIONSID_COL
+        tableName: consumtions
+- changeSet:
+    id: 1720343646726-6
+    author: root (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_CONSUMTIONSNAME_COL
+        tableName: consumtions
+- changeSet:
+    id: 1720343646726-7
+    author: root (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: UC_CONSUMTION_BOOKINGID_COL
+        tableName: consumtion_booking
+- changeSet:
+    id: 1720343646726-8
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: consumtion_id
+        baseTableName: consumtion_booking
+        constraintName: FKc0by16h2go5rc88gt50c2o4bl
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: consumtions
+        validate: true
+- changeSet:
+    id: 1720343646726-9
+    author: root (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: booking_id
+        baseTableName: consumtion_booking
+        constraintName: FKe2wyxc4wxqms68uy5b525g813
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: bookings
+        validate: true
+
