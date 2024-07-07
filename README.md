@@ -1,6 +1,6 @@
 # Project
 
-This project demonstrates how to run Docker Compose on WSL (Windows Subsystem for Linux). Follow the steps below to get started.
+This project is for Global Solusindo Technical Test
 
 ## Prerequisites
 
