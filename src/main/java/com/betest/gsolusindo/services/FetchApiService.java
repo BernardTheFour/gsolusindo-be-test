@@ -62,7 +62,6 @@ public class FetchApiService {
 
         response.stream()
                 .forEach((data) -> {
-                    UUID bookingUUID = UUID.randomUUID();
                     Set<ConsumtionBookingDto> consumtionBookingsDto = data.listConsumption()
                             .stream()
                             .map(consumtion -> {
@@ -75,7 +74,7 @@ public class FetchApiService {
                             .collect(Collectors.toSet());
 
                     BookingDto dto = new BookingDto(
-                            bookingUUID,
+                            UUID.randomUUID();,
                             data.officeName(),
                             data.roomName(),
                             data.participants(),
