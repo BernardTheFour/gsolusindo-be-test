@@ -1,5 +1,7 @@
 package com.betest.gsolusindo.services;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.betest.gsolusindo.dtos.ConsumtionDto;
@@ -26,6 +28,13 @@ public class ConsumtionService {
                 null);
 
         return consumtionRepository.save(consumtion);
+    }
+
+    public Consumtion getById(UUID id) {
+        Consumtion consumtion = consumtionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Consumtion not found"));
+
+        return consumtion;
     }
 
     public Consumtion getByName(String name) {

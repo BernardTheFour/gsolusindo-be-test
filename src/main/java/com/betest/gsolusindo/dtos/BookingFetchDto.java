@@ -11,10 +11,5 @@ public record BookingFetchDto(
         Instant startTime,
         Instant endTime,
         Instant bookingDate,
-        List<ConsumtionName> listConsumption) {
-}
-
-record ConsumtionName(
-        String name) {
-
+        List<ConsumtionNameFetchDto> listConsumption) {
 }
