@@ -6,6 +6,8 @@ import com.betest.gsolusindo.dtos.ConsumtionDto;
 import com.betest.gsolusindo.models.Consumtion;
 import com.betest.gsolusindo.repositories.ConsumtionRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ConsumtionService {
 
@@ -24,5 +26,12 @@ public class ConsumtionService {
                 null);
 
         return consumtionRepository.save(consumtion);
+    }
+
+    public Consumtion getByName(String name) {
+        Consumtion consumtion = consumtionRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Consumtion not found"));
+
+        return consumtion;
     }
 }

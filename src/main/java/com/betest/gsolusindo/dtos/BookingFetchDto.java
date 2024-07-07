@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.betest.gsolusindo.models.Booking;
 import com.betest.gsolusindo.models.Consumtion;
 
-public record BookingDto(
+public record BookingFetchDto(
         UUID id,
         String officeName,
         String roomName,
@@ -16,15 +16,15 @@ public record BookingDto(
         Instant startTime,
         Instant endTime,
         Instant bookingDate,
-        Set<UUID> consumtionIds) {
+        Set<String> consumtionNames) {
 
-    public static BookingDto toDto(Booking entity) {
-        Set<UUID> consumtionIds = entity.getConsumtions()
+    public static BookingFetchDto toDto(Booking entity) {
+        Set<String> consumtionIds = entity.getConsumtions()
                 .stream()
-                .map(Consumtion::getId)
+                .map(Consumtion::getName)
                 .collect(Collectors.toSet());
 
-        BookingDto dto = new BookingDto(
+        BookingFetchDto dto = new BookingFetchDto(
                 entity.getId(),
                 entity.getOfficeName(),
                 entity.getRoomName(),
