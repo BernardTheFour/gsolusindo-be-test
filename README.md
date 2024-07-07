@@ -1,6 +1,6 @@
 # Project
 
-This project is for Global Solusindo Technical Test
+This project is for Mega Giga Solusindo Technical Test
 
 ## Prerequisites
 
