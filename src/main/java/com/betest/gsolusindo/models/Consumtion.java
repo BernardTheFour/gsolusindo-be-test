@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.betest.gsolusindo.dtos.ConsumtionDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
